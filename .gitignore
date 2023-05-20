@@ -1,3 +1,4 @@
 .vscode
 CiscoPy/CISCO-IOS-CONFIG-AUTOMATION
 .idea
+ip/__pycache__/*
