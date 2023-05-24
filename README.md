@@ -66,3 +66,50 @@ CiscoPY is a Python package that provides a set of tools and utilities for worki
 | schema_ip() | Generates IP addresses for a given set of VLANs and CIDR blocks. |
 | config_lacp() | Generates configuration commands for a Cisco switch to configure LACP. |
 | config_ether_lacp() | Generates configuration commands for a Cisco switch to configure EtherChannel with LACP. |
+
+### __NETWORK DEVICES__
+
+---
+
+#### __`NetworkDevice` Class__
+
+| Attribute | Description |
+| --- | --- |
+| hostname | The hostname of the device. |
+| management_ip | The management IP address of the device. |
+| interfaces | A list of interface objects. |
+
+| Method | Description |
+| --- | --- |
+| __init__(self, hostname, management_ip=None) | Initializes a new NetworkDevice instance. |
+| add_interface(self, interface) | Adds an interface object to the device. |
+| connect(self) | Connects the device. |
+| disconnect(self) | Disconnects the device. |
+| __repr__(self) | Returns a string representation of the device. |
+| __str__(self) | Returns a string representation of the device. |
+
+#### __`RouterInterface` Class__
+
+---
+
+| Attribute | Description |
+| --- | --- |
+| name | The name of the interface. |
+| ip_address | The IP address of the interface. |
+| subnet | The subnet of the interface. |
+
+| Method | Description |
+| --- | --- |
+| __init__(self, name, ip_address=None, subnet=None) | Initializes a new RouterInterface instance. |
+
+#### __`Router` Class__
+
+| Attribute | Description |
+| --- | --- |
+| routing_protocol | The routing protocol used by the router. |
+| routed_interfaces | A dictionary of routed interface objects. |
+
+| Method | Description |
+| --- | --- |
+| __init__(self, hostname, routing_protocol=None, **kwargs) | Initializes a new Router instance. |
+| add_routed_interface(self, interface=None, name=None, ip_address=None, subnet=None) | Adds a routed interface object to the router. |
