@@ -3,4 +3,4 @@ CiscoPy/CISCO-IOS-CONFIG-AUTOMATION
 .idea
 ip/__pycache__/*
 
-/venv
+venv/
