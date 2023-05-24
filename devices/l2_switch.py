@@ -1,5 +1,5 @@
-from devices.device import Device
-from devices.interfaces import Interface
+from CiscoPy.devices.device import Device
+from CiscoPy.devices.interfaces import Interface
 
 
 class L2Switch(Device):
