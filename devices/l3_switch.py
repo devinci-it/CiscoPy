@@ -1,7 +1,7 @@
-from devices.device import Device
-from devices.interfaces import Interface
+from CiscoPy.devices.device import Device
+from CiscoPy.devices.interfaces import Interface
 import ipaddress
-from app import App
+from CiscoPy.app import App
 
 class L3Switch(Device):
     def __init__(self, hostname, vtp_domain):
