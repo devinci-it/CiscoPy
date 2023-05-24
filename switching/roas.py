@@ -11,6 +11,7 @@ def router_on_a_stick(base_port, vlans=None, site_ids=None, sites=None):
     
     """
 
+    global native_conf
     to_return = ""
     for (site, site_id) in zip(sites, site_ids):
         site = (site, site_id)

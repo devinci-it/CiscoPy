@@ -40,6 +40,6 @@ def subnet(network: str, subnet_count: int) -> list:
     """
     subnets = []
     network = ipaddress.IPv4Network(network)
-    pref_diff = (subnet_count).bit_length()
+    pref_diff = subnet_count.bit_length()
     nextworks = network.subnets(prefixlen_diff=pref_diff)
     return [net for net in nextworks]

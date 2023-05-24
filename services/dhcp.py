@@ -2,7 +2,7 @@
 from ipaddress import IPv4Address, IPv4Network
 
 def config_dhcp(dhcp_pool_name, network_address, dns_address=None, dg=None, dns=None, exclude_ips=None):
-    
+
     """
     Configures DHCP on a network.
 
@@ -15,6 +15,10 @@ def config_dhcp(dhcp_pool_name, network_address, dns_address=None, dg=None, dns=
     :param dns_address: str
     :param dg: str
     :return: str
+
+    Args:
+        dns:
+        exclude_ips:
 
     """
     net_address = IPv4Network(network_address)
