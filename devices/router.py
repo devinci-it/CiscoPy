@@ -1,4 +1,4 @@
-from devices.device import Device
+from CiscoPy.devices.device import Device
 
 class Router(Device):
     def __init__(self, hostname):
