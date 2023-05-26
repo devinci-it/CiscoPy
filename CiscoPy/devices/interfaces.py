@@ -1,52 +1,83 @@
+
+from  ipaddress import  ip_network
 class Interface:
-    def __init__(self, name: str) -> None:
+    def __init__(self, name, ip_address=None, subnet_mask=None):
         '''
         Initializes an Interface object.
 
         Args:
         - name: str, the name of the interface
+        - ip_address: str, the IP address of the interface
+        - subnet_mask: str, the subnet mask of the interface in CIDR notation
 
         Returns:
         - None
         '''
         self.name = name
+        self.ip_address = ip_address
+        self.subnet_mask = subnet_mask
         self.isLagged = False
-        self.vlan_ids = []
-        self.ip_addresses = []
-        self.networks = []
 
-    def add_vlan(self, vlan_id: int) -> None:
-        '''
-        Adds a VLAN to the interface.
-
-        Args:
-        - vlan_id: int, the ID of the VLAN to add
-
-        Returns:
-        - None
-        '''
-        self.vlan_ids.append(vlan_id)
-
-    def add_ip(self, ip_address: str) -> None:
+    def add_ip_address(self, ip_address, subnet_mask):
         '''
         Adds an IP address to the interface.
 
         Args:
         - ip_address: str, the IP address to add
+        - subnet_mask: str, the subnet mask of the IP address in CIDR notation
 
         Returns:
         - None
         '''
-        self.ip_addresses.append(ip_address)
+        network = ip_network(f"{ip_address}/{subnet_mask}", strict=False)
+        self.ip_address = str(network.network_address)
+        self.subnet_mask = str(network.netmask)
 
-    def get_ip(self) -> str:
+
+    def generate_config(self):
         '''
-        Returns the first IP address associated with the interface.
+        Generates the configuration for the interface.
+
+        Returns:
+        - str, the configuration for the interface
+        '''
+
+        config = f'''
+        interface {self.name}
+        ip address {self.ip_address} {self.subnet_mask}
+        '''
+        if self.isLagged:
+            config += "channel-group 1 mode active\\n"
+        return config
+
+
+class LAGInterface:
+    def __init__(self, interface_dict):
+        '''
+        Initializes a LAGInterface object.
 
         Args:
-        - None
+        - interface_dict: dict, a dictionary representing a LAG interface and its constituent interfaces
 
         Returns:
-        - str, the first IP address associated with the interface
+        - None
         '''
-        return self.ip_addresses[0] if self.ip_addresses else ''
+        self.name = list(interface_dict.keys())[0]
+        self.interfaces = interface_dict[self.name]
+
+    def generate_config(self):
+        '''
+        Generates the configuration for the LAG interface.
+
+        Returns:
+        - str, the configuration for the LAG interface
+        '''
+        config = f'''
+        interface {self.name}
+        no ip address
+        '''
+        for interface in self.interfaces:
+            config += f"channel-group 1 mode active\\n"
+        return config
+
+
