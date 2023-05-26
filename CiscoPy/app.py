@@ -1,8 +1,8 @@
-from typing import List
-from devices.router import Router
-from devices.l2_switch import L2Switch
-# from devices.l3_switch import L3Switch
-from devices.endpoint import Endpoint
+from CiscoPy.devices.router import Router
+from CiscoPy.devices.l2_switch import L2Switch
+from CiscoPy.devices.l3_switch import L3Switch
+from CiscoPy.devices.endpoint import Endpoint
+from CiscoPy.config_generator import generate_config
 
 class App:
     devices = []
@@ -36,18 +36,6 @@ class App:
         cls.devices.append(device)
 
     @classmethod
-    def configure(cls):
-        """
-        Configures all devices in the list of devices.
-
-        Returns:
-        - None
-        """
-        for device in cls.devices:
-            # implementation goes here
-            pass
-
-    @classmethod
     def generate(cls):
         """
         Generates configurations for all devices in the list of devices.
@@ -65,7 +53,7 @@ class App:
                     print(f"VLAN database for VTP domain {vtp_domain}:")
                     for vlan_id in vlan_ids:
                         vlan_name = f"vlan_{vlan_id}"
-                        print(f"vlan {vlan_id} \\n name {vlan_name}")
+                        print(f"vlan {vlan_id} \\\\n name {vlan_name}")
                         vlan_interfaces = device.get_vlan_interfaces(vlan_id)
                         print(f"  {len(vlan_interfaces)} interfaces:")
                         for interface_name in vlan_interfaces:
@@ -81,6 +69,8 @@ class App:
                 pass
             print("=" * 50)
 
+        generate_config(cls.devices)
+
     @classmethod
     def save(cls):
         """
@@ -91,4 +81,3 @@ class App:
         """
         # implementation goes here
         pass
-

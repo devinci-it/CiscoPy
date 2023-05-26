@@ -1,11 +1,11 @@
 from CiscoPy.devices.device import Device
 from CiscoPy.devices.interfaces import Interface
 import ipaddress
-from CiscoPy.app import App
+from app import App
 
 class L3Switch(Device):
     def __init__(self, hostname, vtp_domain):
-        super().__init__(hostname)
+        super().__init__(hostname)  
         self.routing_protocol = 'OSPF'
         self.vtp_domain = vtp_domain
         self.vlans = {'default': []}
@@ -113,3 +113,37 @@ class L3Switch(Device):
                     raise ValueError(f"{interface_name} is not a valid interface for {self.hostname}")
         self.lag_interfaces = lag_interfaces
 
+
+
+from CiscoPy.devices.l3_switch import L3Switch
+from CiscoPy.devices.interfaces import Interface
+
+# create two switches
+s1 = L3Switch("switch1")
+s2 = L3Switch("switch2")
+
+# add interfaces to the switches
+s1.add_interface(Interface("GigabitEthernet0/1"))
+s1.add_interface(Interface("GigabitEthernet0/2"))
+s2.add_interface(Interface("GigabitEthernet0/1"))
+s2.add_interface(Interface("GigabitEthernet0/2"))
+
+# configure IPs
+s1.add_ip("GigabitEthernet0/1", "192.168.1.1", 24)
+s2.add_ip("GigabitEthernet0/1", "192.168.1.2", 24)
+
+# test connectivity
+print(s1.ping("192.168.1.2"))
+
+# configure LAG
+s1.get_lagged_interfaces([
+    {
+        "gi0/1": ["GigabitEthernet0/1", "GigabitEthernet0/2"]
+    }
+])
+
+# configure trunk port
+s2.add_trunk_port("GigabitEthernet0/1", [10, 20, 30])
+
+# add access port
+s2.add_access_port("GigabitEthernet0/2")

@@ -2,5 +2,15 @@
 CiscoPy/CISCO-IOS-CONFIG-AUTOMATION
 .idea
 ip/__pycache__/*
-
+.DS_Store
 venv/
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+CiscoPy/devices/__pycache__
+CiscoPy/__pycache__

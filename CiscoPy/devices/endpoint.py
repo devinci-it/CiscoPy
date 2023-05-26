@@ -1,4 +1,4 @@
-from CiscoPy.devices import Device
+from CiscoPy.devices.device import Device
 
 class Endpoint(Device):
     def __init__(self, hostname):

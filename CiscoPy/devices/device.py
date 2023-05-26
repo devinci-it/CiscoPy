@@ -1,3 +1,4 @@
+from CiscoPy.devices.interfaces import Interface
 class Device:
     def __init__(self, hostname):
         '''
@@ -31,7 +32,7 @@ class Device:
         Adds a LAG interface to the device.
 
         Args:
-        - interface_list: list of dictionaries, where each dictionary represents a LAG interface and its constituent interfaces
+        - interface_list: a list of dictionaries, where each dictionary represents a LAG interface and its constituent interfaces
 
         Returns:
         - None
@@ -54,3 +55,4 @@ class Device:
                     if i.name == interface:
                         i.isLagged = True
             self.lag_interfaces.append(item)
+
